@@ -1,9 +1,12 @@
 import { useState, useRef } from 'react';
 import type { MouseEventHandler } from 'react';
 import clsx from 'clsx';
+
 import { OptionType } from 'src/constants/articleProps';
 import { Text } from 'src/ui/text';
+
 import arrowDown from 'src/images/arrow-down.svg';
+
 import { Option } from './Option';
 import { isFontFamilyClass } from './helpers/isFontFamilyClass';
 import { useEnterSubmit } from './hooks/useEnterSubmit';
@@ -22,9 +25,12 @@ type SelectProps = {
 
 export const Select = (props: SelectProps) => {
 	const { options, placeholder, selected, onChange, onClose, title } = props;
+
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+
 	const rootRef = useRef<HTMLDivElement>(null);
 	const placeholderRef = useRef<HTMLDivElement>(null);
+
 	const optionClassName = selected?.optionClassName ?? '';
 
 	useOutsideClickClose({
@@ -43,31 +49,31 @@ export const Select = (props: SelectProps) => {
 		setIsOpen(false);
 		onChange?.(option);
 	};
+
 	const handlePlaceHolderClick: MouseEventHandler<HTMLDivElement> = () => {
-		setIsOpen((isOpen) => !isOpen);
+		setIsOpen((state) => !state);
 	};
 
 	return (
 		<div className={styles.container}>
 			{title && (
-				<>
-					<Text size={12} weight={800} uppercase>
-						{title}
-					</Text>
-				</>
+				<Text size={12} weight={800} uppercase>
+					{title}
+				</Text>
 			)}
+
 			<div
 				className={styles.selectWrapper}
 				ref={rootRef}
 				data-is-active={isOpen}
 				data-testid='selectWrapper'>
 				<img src={arrowDown} alt='иконка стрелочки' className={styles.arrow} />
+
 				<div
 					className={clsx(
 						styles.placeholder,
 						(styles as Record<string, string>)[optionClassName]
 					)}
-					data-status={status}
 					data-selected={!!selected?.value}
 					onClick={handlePlaceHolderClick}
 					role='button'
@@ -82,6 +88,7 @@ export const Select = (props: SelectProps) => {
 						{selected?.title || placeholder}
 					</Text>
 				</div>
+
 				{isOpen && (
 					<ul className={styles.select} data-testid='selectDropdown'>
 						{options
